@@ -1,0 +1,49 @@
+{
+    "name": "timestamp-node",
+    "version": "0.0.1",
+    "description": "Timestamp Microservice made for freeCodeCamp",
+    "main": "index.js",
+    "scripts": {
+        "build": "tsc",
+        "watch:ts": "tsc --watch",
+        "clean": "rimraf dist",
+        "serve": "micro dist/index.js",
+        "watch:dev": "micro-dev dist/index.js",
+        "start": "npm-run-all --serial clean build serve",
+        "dev": "npm-run-all clean build --parallel watch:*"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/azdanov/timestamp-node.git"
+    },
+    "author": "Anton Zdanov <akumael@gmail.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/azdanov/timestamp-node/issues"
+    },
+    "homepage": "https://github.com/azdanov/timestamp-node#readme",
+    "devDependencies": {
+        "concurrently": "^3.5.1",
+        "eslint": "^4.14.0",
+        "eslint-config-airbnb": "^16.1.0",
+        "eslint-config-prettier": "^2.9.0",
+        "eslint-plugin-import": "^2.8.0",
+        "eslint-plugin-jsx-a11y": "^6.0.3",
+        "eslint-plugin-prettier": "^2.4.0",
+        "eslint-plugin-react": "^7.5.1",
+        "micro-dev": "^2.1.1",
+        "npm-run-all": "^4.1.2",
+        "prettier": "^1.9.2",
+        "tslint": "^5.8.0",
+        "tslint-config-airbnb": "^5.4.2",
+        "tslint-config-prettier": "^1.6.0"
+    },
+    "dependencies": {
+        "@types/micro": "^7.3.1",
+        "@types/node": "^8.5.2",
+        "micro": "^9.0.2",
+        "moment": "^2.20.1",
+        "rimraf": "^2.6.2",
+        "typescript": "^2.6.2"
+    }
+}
