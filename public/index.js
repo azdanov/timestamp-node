@@ -12,7 +12,7 @@ var index = (request, response) => {
     console.log(pathname);
     const time = {
         unix: null,
-        natural: null,
+        natural: null
     };
     if (pathname === "/") {
         const now = moment();

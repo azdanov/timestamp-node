@@ -15,7 +15,8 @@
         "build:rollup": "rollup -c rollup.config.js",
         "prebuild": "npm run clean",
         "build": "run-s build:*",
-        "start": "micro public/index.js"
+        "start": "micro public/index.js",
+        "test": "ava -v"
     },
     "lint-staged": {
         "src/**/*.{ts,js,json}": [
@@ -40,13 +41,16 @@
     "devDependencies": {
         "@types/micro": "^7.3.1",
         "@types/node": "^8.5.2",
+        "ava": "^0.24.0",
         "husky": "^0.14.3",
         "lint-staged": "^6.0.0",
         "micro-dev": "^2.1.1",
         "npm-run-all": "^4.1.2",
         "prettier": "^1.9.2",
+        "request-promise": "^4.2.2",
         "rimraf": "^2.6.2",
         "rollup": "^0.53.3",
+        "test-listen": "^1.1.0",
         "tslint": "^5.8.0",
         "tslint-config-airbnb": "^5.4.2",
         "tslint-config-prettier": "^1.6.0",
