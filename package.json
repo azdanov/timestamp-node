@@ -18,10 +18,13 @@
         "start": "micro public/index.js"
     },
     "lint-staged": {
-        "src/**/*.{ts,js,json}": ["npm run format", "git add"]
+        "src/**/*.{ts,js,json}": [
+            "npm run format",
+            "git add"
+        ]
     },
     "prettier": {
-        "printWidth": 120,
+        "printWidth": 100,
         "tabWidth": 4
     },
     "repository": {
@@ -40,7 +43,6 @@
         "husky": "^0.14.3",
         "lint-staged": "^6.0.0",
         "micro-dev": "^2.1.1",
-        "moment": "^2.20.1",
         "npm-run-all": "^4.1.2",
         "prettier": "^1.9.2",
         "rimraf": "^2.6.2",
@@ -51,6 +53,7 @@
         "typescript": "^2.6.2"
     },
     "dependencies": {
-        "micro": "^9.0.2"
+        "micro": "^9.0.2",
+        "moment": "^2.20.1"
     }
 }
