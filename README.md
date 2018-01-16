@@ -21,11 +21,11 @@ served.
 
 **Example Usages:**
 
-[https://timestamp-node-thjqtmfyik.now.sh/December%2015,%202015]()
+[https://timestamp-node-thjqtmfyik.now.sh/December%2015,%202015](https://timestamp-node-thjqtmfyik.now.sh/December%2015,%202015)
 
-[https://timestamp-node-thjqtmfyik.now.sh/1450137600]()
+[https://timestamp-node-thjqtmfyik.now.sh/1450137600](https://timestamp-node-thjqtmfyik.now.sh/1450137600)
 
-[https://timestamp-node-thjqtmfyik.now.sh/]()
+[https://timestamp-node-thjqtmfyik.now.sh/](https://timestamp-node-thjqtmfyik.now.sh/)
 
 **Example Output:**
 
