@@ -2,7 +2,7 @@
 
 Timestamp Microservice made in node for freeCodeCamp
 
-[Live](https://timestamp-node-thjqtmfyik.now.sh) version, _needs time to
+[Live](https://timestamp-node-rpbinkoiwf.now.sh) version, _needs time to
 boot up_.
 
 Based on [Micro](https://github.com/zeit/micro) http microservice
@@ -21,11 +21,11 @@ served.
 
 **Example Usages:**
 
-[https://timestamp-node-thjqtmfyik.now.sh/December%2015,%202015](https://timestamp-node-thjqtmfyik.now.sh/December%2015,%202015)
+[https://timestamp-node-rpbinkoiwf.now.sh/December%2015,%202015](https://timestamp-node-thjqtmfyik.now.sh/December%2015,%202015)
 
-[https://timestamp-node-thjqtmfyik.now.sh/1450137600](https://timestamp-node-thjqtmfyik.now.sh/1450137600)
+[https://timestamp-node-rpbinkoiwf.now.sh/1450137600](https://timestamp-node-thjqtmfyik.now.sh/1450137600)
 
-[https://timestamp-node-thjqtmfyik.now.sh/](https://timestamp-node-thjqtmfyik.now.sh/)
+[https://timestamp-node-rpbinkoiwf.now.sh/](https://timestamp-node-thjqtmfyik.now.sh/)
 
 **Example Output:**
 

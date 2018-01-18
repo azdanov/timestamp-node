@@ -10,45 +10,74 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+import { IncomingMessage, ServerResponse } from "http";
 import { send } from "micro";
 import moment from "moment";
-import { IncomingMessage, ServerResponse } from "http";
-import url from "url";
 import * as querystring from "querystring";
+import url from "url";
 
-interface timeResponse {
+interface unixNaturalTime {
     unix: string | null;
     natural: string | null;
 }
 
-export default (request: IncomingMessage, response: ServerResponse) => {
-    const { pathname } = url.parse(request.url || "");
+function extractPathname(request: IncomingMessage) {
+    let { pathname } = url.parse(request.url || "");
+
+    if (typeof pathname === "string" && pathname.length > 1) {
+        pathname = pathname.slice(1); // Remove leading slash
+    } else if (typeof pathname === "undefined" || pathname === null) {
+        pathname = "";
+    }
+
+    return pathname;
+}
+
+function setParsedTime(pathname: string) {
+    let momentParsed: moment.Moment;
 
     console.log(pathname);
-    const time: timeResponse = {
+    const isNumber = !Number.isNaN(Number(pathname));
+    if (isNumber) {
+        momentParsed = moment(+pathname);
+    } else {
+        momentParsed = moment(querystring.unescape(pathname));
+    }
+
+    return momentParsed;
+}
+
+function createTimeObject(momentNow: moment.Moment): unixNaturalTime {
+    return {
+        unix: momentNow.format("x"),
+        natural: momentNow.format("LLLL")
+    };
+}
+
+function createEmptyTimeObject(): unixNaturalTime {
+    return {
         unix: null,
         natural: null
     };
+}
 
-    if (pathname === "/") {
-        const now = moment();
-        time.unix = now.format("x");
-        time.natural = now.format("LLLL");
-    } else if (typeof pathname === "string") {
-        const timeFormat = pathname.slice(1); // Remove leading '/'
-        let parsed: moment.Moment;
+export default (request: IncomingMessage, response: ServerResponse) => {
+    const pathname = extractPathname(request);
 
-        if (!Number.isNaN(Number(timeFormat))) {
-            parsed = moment(+timeFormat);
-        } else {
-            parsed = moment(querystring.unescape(timeFormat));
-        }
+    const isRoot = pathname === "/";
+    let timeObject: unixNaturalTime;
+    let m: moment.Moment;
 
-        if (parsed.isValid()) {
-            time.unix = parsed.format("x");
-            time.natural = parsed.format("LLLL");
-        }
+    if (isRoot) {
+        m = moment();
+    } else {
+        m = setParsedTime(pathname);
     }
 
-    send(response, 200, time);
+    if (m.isValid()) {
+        timeObject = createTimeObject(m);
+    } else {
+        timeObject = createEmptyTimeObject();
+    }
+    send(response, 200, timeObject);
 };

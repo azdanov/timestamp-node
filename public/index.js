@@ -4,36 +4,61 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var micro = require('micro');
 var moment = _interopDefault(require('moment'));
-var url = _interopDefault(require('url'));
 var querystring = require('querystring');
+var url = _interopDefault(require('url'));
 
-var index = (request, response) => {
-    const { pathname } = url.parse(request.url || "");
+function extractPathname(request) {
+    let { pathname } = url.parse(request.url || "");
+    if (typeof pathname === "string" && pathname.length > 1) {
+        pathname = pathname.slice(1);
+    }
+    else if (typeof pathname === "undefined" || pathname === null) {
+        pathname = "";
+    }
+    return pathname;
+}
+function setParsedTime(pathname) {
+    let momentParsed;
     console.log(pathname);
-    const time = {
-        unix: null,
-        natural: null
+    const isNumber = !Number.isNaN(Number(pathname));
+    if (isNumber) {
+        momentParsed = moment(+pathname);
+    }
+    else {
+        momentParsed = moment(querystring.unescape(pathname));
+    }
+    return momentParsed;
+}
+function createTimeObject(momentNow) {
+    return {
+        unix: momentNow.format("x"),
+        natural: momentNow.format("LLLL"),
     };
-    if (pathname === "/") {
-        const now = moment();
-        time.unix = now.format("x");
-        time.natural = now.format("LLLL");
+}
+function createEmptyTimeObject() {
+    return {
+        unix: null,
+        natural: null,
+    };
+}
+var index = (request, response) => {
+    const pathname = extractPathname(request);
+    const isRoot = pathname === "/";
+    let timeObject;
+    let m;
+    if (isRoot) {
+        m = moment();
     }
-    else if (typeof pathname === "string") {
-        const timeFormat = pathname.slice(1);
-        let parsed;
-        if (!Number.isNaN(Number(timeFormat))) {
-            parsed = moment(+timeFormat);
-        }
-        else {
-            parsed = moment(querystring.unescape(timeFormat));
-        }
-        if (parsed.isValid()) {
-            time.unix = parsed.format("x");
-            time.natural = parsed.format("LLLL");
-        }
+    else {
+        m = setParsedTime(pathname);
     }
-    micro.send(response, 200, time);
+    if (m.isValid()) {
+        timeObject = createTimeObject(m);
+    }
+    else {
+        timeObject = createEmptyTimeObject();
+    }
+    micro.send(response, 200, timeObject);
 };
 
 module.exports = index;
