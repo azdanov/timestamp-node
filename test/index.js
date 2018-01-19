@@ -62,3 +62,14 @@ test("Response for '/06 Mar 2017 21:22:23 Z' pathname", async t => {
     t.is(JSON.parse(body).natural, "Monday, March 6, 2017 11:22 PM");
     service.close();
 });
+
+test("Response for wrong pathname", async t => {
+    const service = micro(microService);
+
+    const url = await listen(service);
+    const body = await request(url + encodeURI("/hello world"));
+
+    t.is(JSON.parse(body).unix, null);
+    t.is(JSON.parse(body).natural, null);
+    service.close();
+});

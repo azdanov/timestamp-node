@@ -32,13 +32,13 @@ function setParsedTime(pathname) {
 function createTimeObject(momentNow) {
     return {
         unix: momentNow.format("x"),
-        natural: momentNow.format("LLLL"),
+        natural: momentNow.format("LLLL")
     };
 }
 function createEmptyTimeObject() {
     return {
         unix: null,
-        natural: null,
+        natural: null
     };
 }
 var index = (request, response) => {
