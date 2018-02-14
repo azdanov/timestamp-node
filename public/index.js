@@ -8,42 +8,42 @@ var querystring = require('querystring');
 var url = _interopDefault(require('url'));
 
 function extractPathname(request) {
-    let { pathname } = url.parse(request.url || "");
-    if (typeof pathname === "string" && pathname.length > 1) {
+    let { pathname } = url.parse(request.url || '');
+    if (pathname && pathname.length > 1) {
         pathname = pathname.slice(1);
     }
-    else if (typeof pathname === "undefined" || pathname === null) {
-        pathname = "";
+    else if (typeof pathname === 'undefined' || pathname === null) {
+        pathname = '';
     }
     return pathname;
 }
 function setParsedTime(pathname) {
     let momentParsed;
-    console.log(pathname);
     const isNumber = !Number.isNaN(Number(pathname));
     if (isNumber) {
         momentParsed = moment(+pathname);
     }
     else {
-        momentParsed = moment(querystring.unescape(pathname));
+        const momentTimeFormats = [moment.ISO_8601, moment.RFC_2822, "MMM DD, YYYY"];
+        momentParsed = moment(querystring.unescape(pathname), momentTimeFormats);
     }
     return momentParsed;
 }
 function createTimeObject(momentNow) {
     return {
-        unix: momentNow.format("x"),
-        natural: momentNow.format("LLLL")
+        unix: momentNow.format('x'),
+        natural: momentNow.format('LLLL'),
     };
 }
 function createEmptyTimeObject() {
     return {
         unix: null,
-        natural: null
+        natural: null,
     };
 }
 var index = (request, response) => {
     const pathname = extractPathname(request);
-    const isRoot = pathname === "/";
+    const isRoot = pathname === '/';
     let timeObject;
     let m;
     if (isRoot) {
