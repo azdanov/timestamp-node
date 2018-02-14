@@ -2,7 +2,7 @@
 
 Timestamp Microservice made in node for freeCodeCamp
 
-[Live](https://timestamp-node-rpbinkoiwf.now.sh) version, _needs time to
+[Live](https://timestamp-node-clapbcwwpd.now.sh/) version, _needs time to
 boot up_.
 
 Based on [Micro](https://github.com/zeit/micro) http microservice
