@@ -13,7 +13,7 @@ function extractPathname(request: IncomingMessage) {
     let { pathname } = url.parse(request.url || "");
 
     if (pathname && pathname.length > 1) {
-        pathname = pathname.slice(1); // Remove leading slash
+        pathname = pathname.slice(1);
     } else if (typeof pathname === "undefined" || pathname === null) {
         pathname = "";
     }
@@ -28,8 +28,8 @@ function setParsedTime(pathname: string) {
     if (isNumber) {
         momentParsed = moment(+pathname);
     } else {
-        const momentTimeFormats = [moment.ISO_8601, moment.RFC_2822, "MMM DD, YYYY"];
-        momentParsed = moment(querystring.unescape(pathname), momentTimeFormats);
+        const timeFormats = [moment.ISO_8601, moment.RFC_2822, "MMM DD, YYYY"];
+        momentParsed = moment(querystring.unescape(pathname), timeFormats);
     }
 
     return momentParsed;
@@ -52,18 +52,19 @@ function createEmptyTimeObject(): unixNaturalTime {
 export default (request: IncomingMessage, response: ServerResponse) => {
     const pathname = extractPathname(request);
 
-    const isRoot = pathname === "/";
     let timeObject: unixNaturalTime;
-    let m: moment.Moment;
+    let momentObject: moment.Moment;
+
+    const isRoot = pathname === "/";
 
     if (isRoot) {
-        m = moment();
+        momentObject = moment();
     } else {
-        m = setParsedTime(pathname);
+        momentObject = setParsedTime(pathname);
     }
 
-    if (m.isValid()) {
-        timeObject = createTimeObject(m);
+    if (momentObject.isValid()) {
+        timeObject = createTimeObject(momentObject);
     } else {
         timeObject = createEmptyTimeObject();
     }
